@@ -1,0 +1,54 @@
+.key-edit {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 40rem;
+    margin: .5rem auto 0 auto;
+}
+.key-edit-header {
+    display: flex;
+    flex-direction: row;
+}
+.key-edit-title {
+    flex: 1;
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin: auto 0 auto 0;
+}
+.key-name {
+    flex: 1;
+}
+.key-edit-fields {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+}
+.key-title-and-type {
+    display: flex;
+    flex-direction: row;
+}
+.image-file-input {
+    display: none;
+}
+.temp-buttons {
+    display: flex;
+    flex-direction: row;
+}
+.save-button {
+    display: block;
+    margin: 0 1rem .5rem auto;
+}
+.key-image-select {
+    display: flex;
+    flex-direction: row;
+}
+.key-image {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: .25rem;
+}
+.image-header-label {
+    font-size: .8125rem;
+    font-style: italic;
+    padding: .5rem;
+}

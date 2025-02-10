@@ -1,0 +1,58 @@
+@use "@angular/material" as mat;
+@use "./styles/typography/_config" as typography;
+
+@include mat.core();
+
+html, body { 
+    height: 100%; 
+}
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+$sm-primary: mat.define-palette(mat.$blue-palette, A200, A100, A400, 50);
+$sm-accent: mat.define-palette(mat.$green-palette, A200, A100, A400, 50);
+$sm-warn: mat.define-palette(mat.$red-palette, A200, A100, A400);
+
+$sm-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $sm-primary,
+      accent: $sm-accent,
+      warn: $sm-warn, 
+    ),
+    typography: mat.define-typography-config(),
+    density: (
+        scale: -3,
+    )
+  )
+);
+
+@include mat.all-component-themes($sm-theme);
+
+.color-primary {
+    color: map-get($sm-primary, 400);
+}
+.background-color-primary {
+    background-color: map-get($sm-primary, 400);
+}
+.background-color-primary-light {
+  background-color: map-get($sm-primary, 50);
+}
+.color-accent {
+    color: map-get($sm-accent, 100);
+}
+.background-color-accent-light {
+  background-color: map-get($sm-accent, 50);
+}
+
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}

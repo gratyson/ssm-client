@@ -1,0 +1,8 @@
+<div class="confirm-dialog">
+    <mat-label class="confirm-label">{{ promptLabel }}</mat-label>
+    <mat-label class="continue-label">Continue?</mat-label>
+    <div class="close-buttons">
+        <button mat-flat-button class="cancel-button" color="primary" (click)="onCancel()">Cancel</button>
+        <button mat-flat-button class="continue-button" color="primary" (click)="onContinue()">Continue</button>
+    </div>
+</div>

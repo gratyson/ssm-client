@@ -1,0 +1,11 @@
+<div class="key-entry-dialog">
+    <mat-label class="key-entry-label">{{ promptLabel }}</mat-label>
+    <mat-form-field class="key-input" appearance="outline">
+        <mat-label>Key</mat-label>
+        <input matInput type="password" [(ngModel)]="keyValue" (keypress)="onKeypress($event)">
+    </mat-form-field>
+    <div class="close-buttons">
+        <button mat-flat-button class="cancel-button" color="primary" (click)="onCancel()">Cancel</button>
+        <button mat-flat-button class="accept-button" color="primary" (click)="onAccept()">Accept</button>
+    </div>
+</div>

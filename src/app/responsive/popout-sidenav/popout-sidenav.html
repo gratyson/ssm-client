@@ -1,0 +1,36 @@
+<div #sidenavDiv class="sidenav-div">
+    <mat-sidenav-container class="popout-sidenav-container">
+        <mat-sidenav #snav [class]="'popout-sidenav-' + (isMobileMode ? 'mobile' : 'desktop')" [mode]="isMobileMode ? 'over' : 'side'" [fixedInViewport]="true" [fixedTopGap]="sideNavFixedTopGap">
+            <button mat-icon-button [class]="'new-button new-button-' + (editSelected ? 'selected' : 'unselected')" (click)="onCreateNew()"><mat-icon>add</mat-icon></button>
+            <mat-nav-list>
+                @for(entry of entries; track $index) {
+                        <div matRipple 
+                             [class]="'entry-select ' + (selectedEntry === $index ? 'entry-select-selected' : 'entry-select-unselected')" 
+                             (click)="onEntrySelect($index)">
+                                <ssm-image class="entry-img" 
+                                           [image]="entry.imageName" 
+                                           imageSourceType="path" 
+                                           [defaultImage]="entry.fallbackImagePath"
+                                           defaultImageSourceType="path" 
+                                           [canEditImage]="false" />
+                                <div class="entry-details">
+                                    <span class="entry-name">{{ entry.name }}</span>
+                                    <span class="entry-type">{{ entry.type }}</span>
+                                    <span class="entry-comments">{{ entry.comments ? entry.comments : "&nbsp;" }}</span>
+                                </div>
+                        </div>
+                }
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div #navigateBackDiv [class]="'navigate-back-' + (isMobileMode ? 'mobile' : 'desktop')">
+                <button mat-icon-button (click)="onBackButtonClicked()"><mat-icon>arrow_back</mat-icon></button>
+            </div>
+            <div class="content-container">
+                @if (selectedEntry !== null) {
+                    <router-outlet></router-outlet>
+                }
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

@@ -1,0 +1,12 @@
+{
+        "/graphql":
+	{
+		"target": "https://localhost:8443",
+		"secure": false
+	},
+	"/rest":
+	{
+		"target": "https://localhost:8443",
+		"secure": false
+	}
+}

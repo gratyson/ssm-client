@@ -1,0 +1,34 @@
+<mat-divider />
+
+<div class="ssm-home">
+    <mat-tab-group #featureTab (selectedIndexChange)="onFeatureSelect($event)" [selectedIndex]="selectedFeature" [style.display]="isDesktopMode ? 'none' : ''">
+        @for(feature of FEATURE_SELECT_OPTIONS; track $index) {
+            <mat-tab (click)="onFeatureSelect($index)">
+                <ng-template mat-tab-label>
+                    <div class="feature-icon"><mat-icon >{{ feature.icon }}</mat-icon></div>
+                    {{ feature.title }}
+                </ng-template>
+            </mat-tab>
+        }
+    </mat-tab-group>
+
+    <div #sidenavDiv class="feature-sidenav-div">
+        <mat-sidenav-container class="feature-sidenav-container">
+            <mat-sidenav #snav class="feature-sidenav" mode="side" [fixedInViewport]="true" [fixedTopGap]="sideNavFixedTopGap">
+                <mat-nav-list>
+                    @for(feature of FEATURE_SELECT_OPTIONS; track $index) {
+                            <div matRipple 
+                                [class]="'feature-select ' + (selectedFeature === $index ? 'feature-select-selected' : 'feature-select-unselected')" 
+                                (click)="onFeatureSelect($index)">
+                                <div class="feature-icon"><mat-icon >{{ feature.icon }}</mat-icon></div>
+                                <span class="feature-title">{{ feature.title }}</span>
+                            </div>
+                    }
+                </mat-nav-list>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <router-outlet></router-outlet>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="smm-image">
+    <input #fileUpload type="file" class="image-file-input" (change)="onFileSelected($event)" accept="image/*">
+    <img #imageElement
+         class="key-image" 
+         [src]="keyImagePath" 
+         (click)="onImageClick()"
+         (error)="onImageError($event)"/>
+</div>

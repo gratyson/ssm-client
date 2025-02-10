@@ -1,0 +1,8 @@
+<popout-sidenav #popoutSidenav
+    [entries]="keyEntries"
+    
+    [selectedEntry]="selectedIndex"
+    (selectedEntryChange)="onEntrySelected($event)"
+    
+    (newEntrySelected)="onNewEntrySelected()"
+/>

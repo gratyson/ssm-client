@@ -1,0 +1,22 @@
+.key-entry-dialog {
+    display: flex;
+    flex-direction: column;
+}
+.close-buttons {
+    display: flex;
+    flex-direction: row;
+}
+.key-entry-label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: .5rem .5rem 0 .5rem;
+}
+.key-input {
+    margin: 1rem .5rem 0 .5rem;
+}
+.cancel-button {
+    margin: 0 0 0 auto;
+}
+.accept-button {
+    margin: 0 .5rem 0 .25rem;
+}

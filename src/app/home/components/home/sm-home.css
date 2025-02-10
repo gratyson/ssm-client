@@ -1,0 +1,52 @@
+.feature-icon {
+    padding-right: .25rem;
+}
+.ssm-home {
+    display: flex;
+    flex-direction: column;
+    height: 99%;
+}
+.feature-sidenav-div {
+    flex: 1;
+    overflow: auto;
+}
+.feature-sidenav {
+    display: flex; 
+    flex-direction: row; 
+    height: 100%;
+}
+.feature-selector {
+    width: 12rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.feature-select {
+    height: 3.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+
+.feature-select {
+    min-height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0 1.5rem 0 1rem;
+    
+    width: calc(100%  - 2px);
+}
+.feature-select-selected {
+    background-color: #e2e2e2;
+    margin: 2px;
+}
+.feature-sidenav {
+    width: 14rem;
+}
+.feature-title {
+    font-size: 1.125rem;
+    
+}

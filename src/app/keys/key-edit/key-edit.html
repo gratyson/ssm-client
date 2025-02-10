@@ -1,0 +1,69 @@
+
+<div class="key-edit">
+    @if(warnMsg) {
+        <div [innerHTML]="warnMsg" class="alert alert-warning"></div>
+    }
+    @if(errorMsg) {
+        <div [innerHTML]="errorMsg" class="alert alert-danger"></div>
+    }
+
+    <div class="key-edit-header">
+        <span class="key-edit-title">
+            Key Details
+        </span>
+        <button mat-icon-button [matMenuTriggerFor]="keyOptions"><mat-icon>more_vertt</mat-icon></button>
+
+        <mat-menu #keyOptions="matMenu">
+            <button mat-menu-item (click)="deleteKey()">
+                Delete Key
+            </button>
+        </mat-menu>
+    </div>
+
+    <div class="key-edit-fields">
+        <div class="flex-row">
+            <ssm-image #keyImage 
+                       class="key-image" 
+                       [(image)]="keyImageName" 
+                       imageType="name"
+                       [defaultImage]="defaultKeyImagePath" 
+                       defaultImageSourceType="path"
+                       [canEditImage]="true" />
+                       
+            <mat-form-field class="key-name">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="keyName" />
+            </mat-form-field>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Comments</mat-label>
+            <textarea matInput [(ngModel)]="keyComments"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="key-type">
+            <mat-label>Key Type</mat-label>
+            <mat-select matNativeControl [(value)]="keyTypeId" [disabled]="!!keyId">
+                @for(keyType of keyTypes; track keyType.id) {
+                    <mat-option [value]="keyType.id">{{ keyType.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    
+        
+        <mat-form-field class="key-password">
+            <mat-label>Key Password</mat-label>
+            <div class="flex-row">
+                <input #passwordInput [type]="viewPassword ? 'text' : 'password'" matInput [(ngModel)]="keyPassword"  [disabled]="!!keyId" />
+                <button mat-icon-button (click)="toggleKeyPasswordVisibility()" [disabled]="!!keyId"><mat-icon matSuffix>{{ viewPasswordIcon }}</mat-icon></button>
+            </div>
+        </mat-form-field>
+
+        <div class="key-image-select">
+            
+        </div>
+
+        <button mat-flat-button class="save-button" color="primary" (click)="onSaveKey()">Save</button>
+    </div>
+
+</div>

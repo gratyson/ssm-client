@@ -1,0 +1,31 @@
+.smm-image {
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+    height: inherit;
+}
+.key-attach-image {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: .375rem;
+}
+.upload-prompt {
+    margin: auto 0 auto 0;
+    padding-right: .5rem;
+    font-style: italic;
+}
+.image-file-input {
+    display: none;
+}
+.key-image {
+    width: 100%;
+    height: 100%;
+}
+.image-icon {
+    font-size: 1.25rem;
+}
+.image-button {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: .375rem 0 0 0;
+}
