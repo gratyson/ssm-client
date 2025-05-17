@@ -11,8 +11,7 @@ import { UpdateNotificationService } from "../../service/update-notification-ser
     selector: "ssm-image",
     templateUrl: "ssm-image.html",
     styleUrl: "ssm-image.css",
-    standalone: true,
-    imports: [ MatButtonModule, MatIconModule ]
+    imports: [MatButtonModule, MatIconModule]
 })
 export class SsmImageComponent {
     

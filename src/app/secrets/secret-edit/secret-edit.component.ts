@@ -38,8 +38,7 @@ const SAVE_MESSAGE_DURATION_MS: number = 3000;
     selector: "secret-edit",
     templateUrl: "secret-edit.html",
     styleUrl: "secret-edit.css",
-    standalone: true,
-    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDividerModule, WebsitePasswordEditComponent, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule, CreditCardEditComponent, TextBlobEditComponent ],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDividerModule, WebsitePasswordEditComponent, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule, CreditCardEditComponent, TextBlobEditComponent]
 })
 export class SecretEditComponent {
 

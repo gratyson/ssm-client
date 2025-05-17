@@ -6,19 +6,15 @@ import { Router, RouterOutlet } from "@angular/router";
 import { environment } from "../../../../environments/environment";
 import { MatRippleModule } from "@angular/material/core";
 import { MatDividerModule } from "@angular/material/divider";
-import { PopoutSidenavComponent } from "../../../responsive/popout-sidenav/popout-sidenav.component";
 import { MatListModule } from "@angular/material/list";
 import { MatSidenav, MatSidenavModule } from "@angular/material/sidenav";
 import { ResponsiveMode, ResponsiveModeService } from "../../../responsive/responsive-mode-service";
-
-
 
 @Component({
     selector: "sm-home",
     templateUrl: "sm-home.html",
     styleUrl: "sm-home.css",
-    standalone: true,
-    imports: [MatTabsModule, MatIconModule, MatFormFieldModule, MatRippleModule, MatDividerModule, RouterOutlet, PopoutSidenavComponent, MatSidenavModule, MatListModule ],
+    imports: [MatTabsModule, MatIconModule, MatFormFieldModule, MatRippleModule, MatDividerModule, RouterOutlet, MatSidenavModule, MatListModule]
 })
 export class SmHomeComponent {
 

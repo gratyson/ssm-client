@@ -3,7 +3,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { RouterLink } from "@angular/router";
 import { AuthClient } from "../../../client/auth-client";
 import { UserService } from "../../../security/user-service";
 
@@ -11,8 +10,7 @@ import { UserService } from "../../../security/user-service";
     selector: "sm-header",
     templateUrl: "sm-header.html",
     styleUrl: "sm-header.css",
-    standalone: true,
-    imports: [ MatFormFieldModule, MatIconModule, MatButtonModule, MatMenuModule, RouterLink ]
+    imports: [MatFormFieldModule, MatIconModule, MatButtonModule, MatMenuModule ]
 })
 export class SmHeader {
 

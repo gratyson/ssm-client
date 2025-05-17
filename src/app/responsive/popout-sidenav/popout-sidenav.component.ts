@@ -13,7 +13,6 @@ import { SsmImageComponent } from "../../image/ssm-image/ssm-image.component";
     selector: "popout-sidenav",
     templateUrl: "popout-sidenav.html",
     styleUrl: "popout-sidenav.css",
-    standalone: true,
     imports: [ MatSidenavModule, MatListModule, MatRippleModule, MatIconModule, MatButtonModule, RouterOutlet, SsmImageComponent ],
 })
 export class PopoutSidenavComponent {

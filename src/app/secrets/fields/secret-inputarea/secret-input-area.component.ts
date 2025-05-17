@@ -9,8 +9,7 @@ const LOCKED_REPLACEMENT_CHAR = "•";
     selector: "secret-input-area",
     templateUrl: "secret-input-area.html",
     styleUrl: "secret-input-area.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule ]
+    imports: [FormsModule, MatFormFieldModule, MatInputModule]
 })
 export class SecretInputAreaComponent {
 

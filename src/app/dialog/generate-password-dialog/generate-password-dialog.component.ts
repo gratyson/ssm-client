@@ -18,8 +18,7 @@ const LESS_COMMON_SYMBOLS: string = "_`~[]{}|;:<>?";
     selector: "generate-password-dialog",
     templateUrl: "generate-password-dialog.html",
     styleUrl: "generate-password-dialog.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCheckboxModule ],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCheckboxModule]
 })
 export class GeneratePasswordDialogComponent {
 

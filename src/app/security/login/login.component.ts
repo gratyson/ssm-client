@@ -13,10 +13,9 @@ import { AuthClient } from "../../client/auth-client";
 
 @Component({
     selector: "ssrs-login",
-    standalone: true,
     templateUrl: "login.html",
     styleUrl: "login.css",
-    imports: [ FormsModule, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule ],
+    imports: [FormsModule, ReactiveFormsModule, MatGridListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
     host: { ["(document:keypress)"]: "onKeypress($event)" }
 })
 export class LoginComponent { 

@@ -9,8 +9,7 @@ import { MatInputModule } from "@angular/material/input";
     selector: "key-entry-dialog",
     templateUrl: "key-entry-dialog.html",
     styleUrl: "key-entry-dialog.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule ],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule]
 })
 export class KeyEntryDialogComponent {
 

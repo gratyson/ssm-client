@@ -12,8 +12,7 @@ import { environment } from "../../../../environments/environment";
     selector: "secret-input",
     templateUrl: "secret-input.html",
     styleUrl: "secret-input.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule ],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule]
 })
 export class SecretFieldComponent {
 

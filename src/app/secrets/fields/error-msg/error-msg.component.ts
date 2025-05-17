@@ -4,7 +4,6 @@ import { Component, Input } from "@angular/core";
     selector: "error-msg",
     templateUrl: "error-msg.html",
     styleUrl: "error-msg.css",
-    standalone: true,
     imports: []
 })
 export class ErrorMsgComponent {

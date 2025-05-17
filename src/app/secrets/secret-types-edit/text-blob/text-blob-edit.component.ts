@@ -14,8 +14,7 @@ const MAX_ALLOWED_TEXT_LENGTH: number = 524288;  // Max length allowed in databa
     selector: "text-blob-edit",
     templateUrl: "text-blob-edit.html",
     styleUrl: "text-blob-edit.css",
-    standalone: true,
-    imports: [ ErrorMsgComponent, SecretInputAreaComponent, MatButtonModule, MatIconModule ]
+    imports: [ErrorMsgComponent, SecretInputAreaComponent, MatButtonModule, MatIconModule]
 })
 export class TextBlobEditComponent extends SecretTypeBaseComponent {
 

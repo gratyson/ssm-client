@@ -16,8 +16,7 @@ const SECRET_ID_QUERY_PARAM = "?secretId=";
     selector: "secrets-manager",
     templateUrl: "secrets-manager.html",
     styleUrl: "secrets-manager.css",
-    standalone: true,
-    imports: [ PopoutSidenavComponent ]
+    imports: [PopoutSidenavComponent]
 })
 export class SecretsManagerComponent {  
 

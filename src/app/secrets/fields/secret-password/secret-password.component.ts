@@ -14,8 +14,7 @@ const VIEW_PASSWORD_ICONS: { [k: number]: string } = { 1: "visibility_off", 0: "
     selector: "secret-password",
     templateUrl: "secret-password.html",
     styleUrl: "secret-password.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule ]
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule]
 })
 export class SecretPasswordComponent {
 

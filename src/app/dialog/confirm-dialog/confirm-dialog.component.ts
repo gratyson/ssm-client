@@ -8,8 +8,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     selector: "confirm-dialog",
     templateUrl: "confirm-dialog.html",
     styleUrl: "confirm-dialog.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatButtonModule ]
+    imports: [FormsModule, MatFormFieldModule, MatButtonModule]
 })
 export class ConfirmDialogComponent {
     public static readonly DEFAULT_HEIGHT: string = "8rem";

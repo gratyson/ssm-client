@@ -7,8 +7,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { SecretFieldComponent } from "../../fields/secret-input/secret-input.component";
-import { SecretEditComponent } from "../../secret-edit/secret-edit.component";
-import { CreditCardComponentsInput, EMPTY_SECRET, EMPTY_SECRET_COMPONENT, Secret, SecretComponent, SecretInput } from "../../../model/secret";
+import { EMPTY_SECRET, Secret, SecretInput } from "../../../model/secret";
 import { SecretClient } from "../../../client/secret-client";
 import { ErrorMsgComponent } from "../../fields/error-msg/error-msg.component";
 import { KeyEntryDialogService } from "../../../service/key-entry-dialog-serive";
@@ -17,8 +16,7 @@ import { KeyEntryDialogService } from "../../../service/key-entry-dialog-serive"
     selector: "credit-card-edit",
     templateUrl: "credit-card-edit.html",
     styleUrl: "credit-card-edit.css",
-    standalone: true,
-    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule, SecretFieldComponent, SecretEditComponent, ErrorMsgComponent ]
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule, SecretFieldComponent, ErrorMsgComponent]
 })
 export class CreditCardEditComponent extends SecretTypeBaseComponent {
 

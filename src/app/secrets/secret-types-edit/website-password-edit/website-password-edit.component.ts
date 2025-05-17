@@ -25,8 +25,7 @@ const GENERATE_PASSWORD_CONTEXT_OPTION: SecretTypeContextOption = { id: "generat
     selector: "website-password-edit",
     templateUrl: "website-password-edit.html",
     styleUrl: "website-password-edit.css",
-    standalone: true,
-    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule, SecretFieldComponent, SecretPasswordComponent, ClipboardModule ],
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ClipboardModule, SecretFieldComponent, SecretPasswordComponent, ClipboardModule]
 })
 export class WebsitePasswordEditComponent extends SecretTypeBaseComponent {
 

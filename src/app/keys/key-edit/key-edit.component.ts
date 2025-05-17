@@ -26,8 +26,7 @@ const SAVE_MESSAGE_DURATION_MS: number = 3000;
     selector: "key-edit",
     templateUrl: "key-edit.html",
     styleUrl: "key-edit.css",
-    standalone: true,
-    imports: [ FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule ]
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule]
 })
 export class KeyEditComponent {
     

@@ -14,8 +14,7 @@ const KEY_ID_QUERY_PARAM = "?keyId=";
     selector: "keys-manager",
     templateUrl: "keys-manager.html",
     styleUrl: "keys-manager.css",
-    standalone: true,
-    imports: [ PopoutSidenavComponent ]
+    imports: [PopoutSidenavComponent]
 })
 export class KeysManagerComponent {
 
