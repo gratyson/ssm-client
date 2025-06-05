@@ -63,6 +63,8 @@ export class KeysManagerComponent {
             popoutSidenavEntries.push(this.convertToPopoutSidenavEntry(key));
         }
 
+        popoutSidenavEntries.sort((l,r) => l.name.localeCompare(r.name));
+
         return popoutSidenavEntries;
     }
 

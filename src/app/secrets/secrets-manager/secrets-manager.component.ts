@@ -111,6 +111,8 @@ export class SecretsManagerComponent {
             popoutEntries.push(this.convertToPopoutSidenavEntry(secret));
         }
 
+        popoutEntries.sort((l,r) => l.name.localeCompare(r.name));
+
         return popoutEntries;
     }
 

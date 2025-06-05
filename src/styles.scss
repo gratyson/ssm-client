@@ -56,3 +56,17 @@ $sm-theme: mat.m2-define-light-theme(
     display: flex;
     flex-direction: column;
 }
+
+.dense-1 {
+    @include mat.all-component-densities(-1);
+}
+.dense-2 {
+    @include mat.all-component-densities(-2);
+}
+.dense-3 {
+    @include mat.all-component-densities(-3);
+}
+
+:root {
+    interpolate-size: allow-keywords;
+}

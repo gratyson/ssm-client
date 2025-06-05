@@ -1,11 +1,28 @@
 <div #sidenavDiv class="sidenav-div">
     <mat-sidenav-container class="popout-sidenav-container">
         <mat-sidenav #snav [class]="'popout-sidenav-' + (isMobileMode ? 'mobile' : 'desktop')" [mode]="isMobileMode ? 'over' : 'side'" [fixedInViewport]="true" [fixedTopGap]="sideNavFixedTopGap">
-            <button mat-icon-button [class]="'new-button new-button-' + (editSelected ? 'selected' : 'unselected')" (click)="onCreateNew()"><mat-icon>add</mat-icon></button>
+            <div class="sidenav-select-header">
+                <div class="sidenav-select-header-filter-row">
+                    <mat-form-field class="sidenav-filter dense-3" subscriptSizing="dynamic" appearance="outline">
+                        <mat-label>Filter by Name</mat-label>
+                        <input matInput #sidenavFilter [value]="filterValue" (keyup)="onFilterKeyup($event)"  />
+                    </mat-form-field>
+                    <button mat-icon-button [class]="'show-filter-button button-' + (showTypeFilter ? 'selected' : 'unselected')" (click)="onShowTypeFilter()">
+                        <span [class]="(typeFilterApplied ? 'color-primary' : '')"><mat-icon>filter_list</mat-icon></span></button>
+                    <button mat-icon-button [class]="'new-button button-' + (editSelected ? 'selected' : 'unselected')" (click)="onCreateNew()"><mat-icon>add</mat-icon></button>
+                </div>
+                <div [class]="'sidenav-select-header-type-filter ' + typeFilterClass">
+                    @for(showType of showTypes | keyvalue; track $index) {
+                        <div class="type-filter-checkbox">
+                            <mat-checkbox (click)="onFilterType($event)" [(ngModel)]="this.showTypes[showType.key]">{{ showType.key }}</mat-checkbox>
+                        </div>
+                    }
+                </div>
+            </div>
             <mat-nav-list>
                 @for(entry of entries; track $index) {
                         <div matRipple 
-                             [class]="'entry-select ' + (selectedEntry === $index ? 'entry-select-selected' : 'entry-select-unselected')" 
+                             [class]="'entry-select' + (selectedEntry === $index ? ' entry-select-selected' : '') + (entryFiltered[$index] ? ' entry-select-filtered' : '')" 
                              (click)="onEntrySelect($index)">
                                 <ssm-image class="entry-img" 
                                            [image]="entry.imageName" 

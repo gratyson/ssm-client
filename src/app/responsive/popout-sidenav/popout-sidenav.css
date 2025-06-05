@@ -1,3 +1,23 @@
+.sidenav-select-header {
+    display: flex;
+    flex-direction: column;
+    padding-top: .25rem;
+}
+.sidenav-select-header-filter-row {
+    display: flex;
+    flex-direction: row;
+}
+.sidenav-select-header-type-filter {
+    height: auto;
+    overflow: hidden;
+}
+.type-filter-checkbox {
+    padding-left: 1.5rem;
+}
+.sidenav-filter {
+    padding: .125rem;
+    flex: auto;
+}
 .navigate-back-mobile {
     display: block;
 }
@@ -13,7 +33,7 @@
 .new-button {
     float: right;
 }
-.new-button-selected {
+.button-selected {
     background-color: #e2e2e2;
 }
 .entry-select {
@@ -25,13 +45,14 @@
     padding: 0 1.5rem 0 1rem;
 
     width: calc(100%  - 2px);
-    
 }
 .entry-select-selected {
     background-color: #e2e2e2;
     margin: 2px;
 }
-   
+.entry-select-filtered {
+    display: none;
+}
 .entry-img {
     height: 2rem;
     width: 2rem;
@@ -54,4 +75,35 @@
 }
 .content-container {
     margin: 1rem;
+}
+
+@keyframes vertical-open {
+    from { height: 0; }
+    to { height: auto; }
+}
+.vertical-open {
+    @supports (interpolate-size: allow-keywords) {
+        animation-name: vertical-open;
+        animation-duration: 200ms;
+    }
+
+    height: auto;
+}
+
+@keyframes vertical-close {
+    from { height: auto; }
+    to { height: 0; }
+}
+.vertical-close {
+    @supports (interpolate-size: allow-keywords) {
+        animation-name: vertical-close;
+        animation-duration: 200ms;
+    }
+
+    height: 0;
+    overflow: hidden;
+}
+.vertical-close-no-animation {
+    height: 0;
+    overflow: hidden;
 }

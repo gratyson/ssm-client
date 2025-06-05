@@ -8,12 +8,20 @@ import { MatButtonModule } from "@angular/material/button";
 import { ResponsiveMode, ResponsiveModeService } from "../responsive-mode-service";
 import { Router, RouterOutlet } from "@angular/router";
 import { SsmImageComponent } from "../../image/ssm-image/ssm-image.component";
+import { debounceTime, Observable, Subject } from "rxjs";
+import { FormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { KeyValuePipe } from "@angular/common";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+
+const DEBOUNCE_TIME_MS: number = 500;
 
 @Component({
     selector: "popout-sidenav",
     templateUrl: "popout-sidenav.html",
     styleUrl: "popout-sidenav.css",
-    imports: [ MatSidenavModule, MatListModule, MatRippleModule, MatIconModule, MatButtonModule, RouterOutlet, SsmImageComponent ],
+    imports: [ MatSidenavModule, MatListModule, MatRippleModule, MatIconModule, MatButtonModule, RouterOutlet, SsmImageComponent, FormsModule, MatFormFieldModule, MatInputModule, KeyValuePipe, MatCheckboxModule ],
 })
 export class PopoutSidenavComponent {
  
@@ -32,13 +40,26 @@ export class PopoutSidenavComponent {
     sideNavFixedTopGap: number = 0;
     isMobileMode: boolean;
 
+    filterValue: string = "";
+    filterResult: Observable<void>;
+    showTypes: { [k:string] : boolean } = {};
+    showTypeResult: Observable<void>;
+    subject: Subject<void> = new Subject<void>();
+
+    entryFiltered: boolean[] = [];
+    showTypeFilter: boolean = false;
+    typeFilterApplied: boolean = false;
+    typeFilterClass: string = "vertical-close-no-animation";   // avoid showing the closing animation on inital page load
+
     @ViewChild("snav") sideNav: MatSidenav;
     @ViewChild("sidenavDiv") sidenavDiv: ElementRef;
+    @ViewChild("sidenavFilter") sidenavFilter: ElementRef;
 
     constructor(private router: Router) { }
 
     public ngOnInit(): void {
-        
+        this.filterResult = this.subject.pipe(debounceTime(DEBOUNCE_TIME_MS));
+        this.filterResult.subscribe(value => this.onFilterUpdate());
     }
 
     public ngAfterViewInit(): void {
@@ -64,6 +85,9 @@ export class PopoutSidenavComponent {
             } else {
                 this.openSideNav();
             }
+        }
+        if (changes.hasOwnProperty("entries")) {
+            this.applyFilters();
         }
     }
 
@@ -113,6 +137,19 @@ export class PopoutSidenavComponent {
         }
     }
 
+    onFilterKeyup(event: Event): void {
+        this.subject.next();
+    }
+
+    onFilterType(event: Event): void {
+        this.subject.next();
+    }
+
+    onShowTypeFilter(): void {
+        this.showTypeFilter = !this.showTypeFilter;
+        this.typeFilterClass = this.showTypeFilter ? "vertical-open" : "vertical-close";
+    }
+
     private closeSideNav(): void {
         if (this.isMobileMode && this.sideNav?.opened) {
             this.sideNav.toggle();
@@ -155,5 +192,26 @@ export class PopoutSidenavComponent {
                 this.sideNavFixedTopGap = this.sidenavDiv.nativeElement.getBoundingClientRect().top;
             }, 0);
         }
+    }
+
+    private onFilterUpdate(): void { 
+        this.filterValue = (this.sidenavFilter.nativeElement.value as string).toLocaleLowerCase();
+        this.applyFilters();
+    }
+
+    private applyFilters(): void {
+        this.entryFiltered = [];
+        this.typeFilterApplied = false;
+
+        this.entries.forEach(entry => {
+            if (!this.showTypes.hasOwnProperty(entry.type)) {
+                this.showTypes[entry.type] = true;
+            } else if (!this.showTypes[entry.type]) {
+                this.typeFilterApplied = true;
+            }
+
+            this.entryFiltered.push(((this.filterValue !== "" && !entry.name.toLocaleLowerCase().startsWith(this.filterValue)))
+                                        || (!this.showTypes[entry.type]));
+        })
     }
 }
