@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { Secret,  WEBSITE_PASSWORD_SECRET_TYPE_ID } from "../../model/secret";
 import { SecretClient } from "../../client/secret-client";
 import { PopoutSidenavComponent } from "../../responsive/popout-sidenav/popout-sidenav.component";
-import { PopoutSidenavEntry } from "../../responsive/popout-sidenav/popout-sidenav-entry";
+import { PopoutSidenavEntry, SortPopoutSidenavEntries } from "../../responsive/popout-sidenav/popout-sidenav-entry";
 import { environment } from "../../../environments/environment";
 import { Router } from "@angular/router";
 import { ImageClient } from "../../client/image-client";
@@ -64,15 +64,24 @@ export class SecretsManagerComponent {
     }
 
     private processUpdatedSecret(secret: Secret): void {
+        var existingSecretUpdated = false;
+        var newSecretEntries: PopoutSidenavEntry[] = [];
+
         for (let index = 0; index < this.secretEntries.length; index++) {
             if (this.secretEntries[index].id === secret.id) {
-                this.secretEntries[index] = this.convertToPopoutSidenavEntry(secret);
-                return;
+                newSecretEntries.push(this.convertToPopoutSidenavEntry(secret));
+                existingSecretUpdated = true;
+            } else {
+                newSecretEntries.push(this.secretEntries[index]);
             }
         }
 
-        this.secretEntries.push(this.convertToPopoutSidenavEntry(secret));
-        this.selectedIndex = this.secretEntries.length - 1;
+        if (!existingSecretUpdated) {
+            newSecretEntries.push(this.convertToPopoutSidenavEntry(secret));
+        }
+        
+        this.secretEntries = SortPopoutSidenavEntries(newSecretEntries);
+        this.setSelectedIndex(secret.id);
     }
 
     private processDeletedSecret(secretId: string): void {
@@ -83,6 +92,19 @@ export class SecretsManagerComponent {
                 break;
             }
         }
+    }
+
+    private setSelectedIndex(secretId: string): void {
+        var newSelectedIndex = -1;
+
+        for (let index = 0; index < this.secretEntries.length; index++) { 
+            if (this.secretEntries[index].id === secretId) {
+                newSelectedIndex = index;
+                break;
+            }
+        }
+
+        this.selectedIndex = newSelectedIndex;
     }
 
     private selectSecretFromPath(): string {
@@ -111,9 +133,7 @@ export class SecretsManagerComponent {
             popoutEntries.push(this.convertToPopoutSidenavEntry(secret));
         }
 
-        popoutEntries.sort((l,r) => l.name.localeCompare(r.name));
-
-        return popoutEntries;
+        return SortPopoutSidenavEntries(popoutEntries);
     }
 
     private convertToPopoutSidenavEntry(secret: Secret): PopoutSidenavEntry {
