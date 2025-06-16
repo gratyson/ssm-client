@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { Secret, SecretComponent, SecretInput } from "../../model/secret";
+import { SecretComponent, SecretInput } from "../../model/secret";
+import { Observable, of } from "rxjs";
 
 const ENCRYPTED_FIELD_PLACEHOLDER: string = "placeholder";   /// placeholder so user can see whether a field exists before decryption
 
@@ -32,9 +33,13 @@ export class SecretTypeBaseComponent {
 
         return !!component.encrypted;
     }
- 
+
     appendSecretComponents(secret: SecretInput): SecretInput {
         return secret;
+    }
+
+    beforeSave(secretToSave: SecretInput): Observable<BeforeSaveResult> {
+        return of(NO_ACTION_BEFORE_SAVE_RESULT);
     }
 
     saveRequiresKeyPassword(): boolean {
@@ -64,4 +69,16 @@ export class SecretTypeBaseComponent {
 export interface SecretTypeContextOption {
     id: string;
     display: string;
+}
+
+export interface BeforeSaveResult {
+    abortSave: boolean;
+    errorMsg: string;
+    updatedSecret: SecretInput | null;
+}
+
+export const NO_ACTION_BEFORE_SAVE_RESULT: BeforeSaveResult = {
+    abortSave: false,
+    errorMsg: "",
+    updatedSecret: null
 }

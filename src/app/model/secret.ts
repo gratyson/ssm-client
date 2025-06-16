@@ -11,6 +11,7 @@ export interface Secret {
     websitePasswordComponents: WebsitePasswordComponents | null;
     creditCardComponents: CreditCardComponents | null;
     textBlobComponents: TextBlobComponents | null;
+    filesComponents: FilesComponents | null;
 };
 
 export interface SecretType {
@@ -37,6 +38,15 @@ export interface TextBlobComponents {
     textBlob: SecretComponent | null;
 }
 
+export interface FilesComponents {
+    files: FilesComponentsFile[] | null;
+}
+
+export interface FilesComponentsFile {
+    fileId: SecretComponent | null;
+    fileName: SecretComponent | null;
+}
+
 export interface SecretComponent {
     id: string | null;
     value: string | null;
@@ -47,9 +57,10 @@ export interface SecretComponent {
 export const WEBSITE_PASSWORD_SECRET_TYPE_ID = "website_password";
 export const CREDIT_CARD_SECRET_TYPE_ID = "credit_card";
 export const TEXT_BLOB_SECRET_TYPE_ID = "text_blob";
+export const FILES_SECRET_TYPE_ID = "files";
 
 export const EMPTY_SECRET_COMPONENT: SecretComponent = { id: "", value: "", encrypted: false, encryptionAlgorithm: "" };
-export const EMPTY_SECRET: Secret = { id: "", imageName: "", name: "", type: null, key: null, comments: "", websitePasswordComponents: null, creditCardComponents: null, textBlobComponents: null };
+export const EMPTY_SECRET: Secret = { id: "", imageName: "", name: "", type: null, key: null, comments: "", websitePasswordComponents: null, creditCardComponents: null, textBlobComponents: null, filesComponents: null };
 
 export interface SecretInput {
     id: string;
@@ -63,6 +74,7 @@ export interface SecretInput {
     websitePasswordComponents: WebsitePasswordComponentsInput | null;
     creditCardComponents: CreditCardComponentsInput | null;
     textBlobComponents: TextBlobComponentsInput | null;
+    filesComponents: FilesComponentsInput | null;
 }
 
 export interface SecretResponse {
@@ -94,6 +106,15 @@ export interface CreditCardComponentsInput {
     expirationMonth: SecretComponentInput | null;
     expirationYear: SecretComponentInput | null;
     securityCode: SecretComponentInput | null;
+}
+
+export interface FilesComponentsInput {
+    files: FilesComponentsFileInput[] | null;
+}
+
+export interface FilesComponentsFileInput {
+    fileId: SecretComponentInput | null;
+    fileName: SecretComponentInput | null;
 }
 
 export interface TextBlobComponentsInput {

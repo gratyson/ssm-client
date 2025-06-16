@@ -3,11 +3,14 @@ import { Injectable } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
 import { environment } from "../../environments/environment";
 import { SaveImageResult } from "../model/image";
+import { RestClientBase } from "./rest-client-base";
 
 @Injectable({providedIn: "root"})
-export class ImageClient {
+export class ImageClient extends RestClientBase {
     
-    constructor(private httpClient: HttpClient) {}
+    constructor(private httpClient: HttpClient) {
+        super("ImageClient");
+    }
 
     public getImagePath(imageName: string): string {
         if (!imageName) {
@@ -40,14 +43,6 @@ export class ImageClient {
         return this.httpClient.delete<SaveImageResult>(`${url}`, options).pipe(catchError(this.handleError("deleteImage", { success: false, errorMsg: "An error occurred on the server" })));
     }
 
-    private handleError<T>(operation = 'operation', result?: T) {
-        return (error: any): Observable<T> => {
-            console.log(`${operation} failed: ${error.message}`);
-            console.error(error);    
-    
-            return of(result as T);
-        };
-    }
 
 
 }

@@ -7,7 +7,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { WebsitePasswordEditComponent } from "../secret-types-edit/website-password-edit/website-password-edit.component";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatButtonModule } from "@angular/material/button";
-import { CREDIT_CARD_SECRET_TYPE_ID, EMPTY_SECRET, Secret, SecretInput, SecretType, TEXT_BLOB_SECRET_TYPE_ID, WEBSITE_PASSWORD_SECRET_TYPE_ID } from "../../model/secret";
+import { CREDIT_CARD_SECRET_TYPE_ID, EMPTY_SECRET, FILES_SECRET_TYPE_ID, Secret, SecretInput, SecretType, TEXT_BLOB_SECRET_TYPE_ID, WEBSITE_PASSWORD_SECRET_TYPE_ID } from "../../model/secret";
 import { SecretClient } from "../../client/secret-client";
 import { SecretTypeClient } from "../../client/secret-type-client";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -23,12 +23,12 @@ import { MatMenuModule } from "@angular/material/menu";
 import { ImageClient } from "../../client/image-client";
 import { Router } from "@angular/router";
 import { KeyEntryDialogComponent } from "../../dialog/key-entry-dialog/key-entry-dialog.component";
-import { Dialog } from "@angular/cdk/dialog";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { SecretTypeBaseComponent, SecretTypeContextOption } from "../secret-types-edit/secret-type-base";
 import { CreditCardEditComponent } from "../secret-types-edit/credit-card-edit/credit-card-edit.component";
 import { TextBlobEditComponent } from "../secret-types-edit/text-blob/text-blob-edit.component";
+import { FilesEditComponent } from "../secret-types-edit/files-edit/files-edit.component";
 
 const ACCOUNT_PASSWORD_KEY_ID: string = "0";
 const ACCOUNT_PASSWORD_KEY_NAME: string = "(Account Password)";
@@ -38,7 +38,7 @@ const SAVE_MESSAGE_DURATION_MS: number = 3000;
     selector: "secret-edit",
     templateUrl: "secret-edit.html",
     styleUrl: "secret-edit.css",
-    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDividerModule, WebsitePasswordEditComponent, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule, CreditCardEditComponent, TextBlobEditComponent]
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDividerModule, WebsitePasswordEditComponent, MatButtonModule, MatIconModule, SsmImageComponent, MatMenuModule, CreditCardEditComponent, TextBlobEditComponent, FilesEditComponent]
 })
 export class SecretEditComponent {
 
@@ -53,6 +53,7 @@ export class SecretEditComponent {
     WEBSITE_PASSWORD_SECRET_TYPE_ID: string = WEBSITE_PASSWORD_SECRET_TYPE_ID;
     CREDIT_CARD_SECRET_TYPE_ID: string = CREDIT_CARD_SECRET_TYPE_ID;
     TEXT_BLOB_SECRET_TYPE_ID: string = TEXT_BLOB_SECRET_TYPE_ID;
+    FILES_SECRET_TYPE_ID: string = FILES_SECRET_TYPE_ID;
 
     ACCOUNT_PASSWORD_KEY_ID: string = ACCOUNT_PASSWORD_KEY_ID;
     ACCOUNT_PASSWORD_KEY_NAME: string = ACCOUNT_PASSWORD_KEY_NAME;
@@ -61,6 +62,7 @@ export class SecretEditComponent {
     @ViewChild("websitePasswordEdit") websitePasswordEdit: WebsitePasswordEditComponent;
     @ViewChild("creditCardEdit") creditCardEdit: CreditCardEditComponent;
     @ViewChild("textBlobEdit") textBlobEdit: TextBlobEditComponent;
+    @ViewChild("filesEdit") filesEdit: FilesEditComponent;
 
     @Input() secretId: string;
 
@@ -127,6 +129,7 @@ export class SecretEditComponent {
         this.typeEditComponentByTypeId[WEBSITE_PASSWORD_SECRET_TYPE_ID] = this.websitePasswordEdit;
         this.typeEditComponentByTypeId[CREDIT_CARD_SECRET_TYPE_ID] = this.creditCardEdit;
         this.typeEditComponentByTypeId[TEXT_BLOB_SECRET_TYPE_ID] = this.textBlobEdit;
+        this.typeEditComponentByTypeId[FILES_SECRET_TYPE_ID] = this.filesEdit;
     }
 
     onSaveSecret(): void {
@@ -207,19 +210,29 @@ export class SecretEditComponent {
                 this.warnMsg = "Image not saved: " + (result ? result.errorMsg : "No response from server");
             }
 
-            this.secretClient.saveSecret(this.getSecretInput(keyPassword)).subscribe((secretResponse) => {
-                this.warnMsg = "";
-                this.errorMsg = "";
+            const secretToSave: SecretInput = this.getSecretInput(keyPassword);
 
-                if (secretResponse?.success && secretResponse?.secret) {
-                    this.setSecretFields(secretResponse.secret);
-                    this.router.navigate(["app/secrets", "edit"], { queryParams: { "secretId": secretResponse.secret.id }});
-                    this.updateNotificationService.publishUpdatedSecret(secretResponse.secret);
-                    this.snackBar.open("Secret saved", "Close", { duration: SAVE_MESSAGE_DURATION_MS });
+            this.typeEditComponentByTypeId[this.secretTypeId].beforeSave(secretToSave).subscribe(result => {
+                if (result.abortSave) {
+                    this.snackBar.open("Unable to save secret: " + result.errorMsg, "OK", { duration: SAVE_MESSAGE_DURATION_MS });
                 } else {
-                    this.errorMsg = "Unable to save secret. " + secretResponse?.errorMsg;
+                    this.secretClient.saveSecret(secretToSave).subscribe((secretResponse) => {
+                        this.warnMsg = "";
+                        this.errorMsg = "";
+
+                        if (secretResponse?.success && secretResponse?.secret) {
+                            this.setSecretFields(secretResponse.secret);
+                            this.router.navigate(["app/secrets", "edit"], { queryParams: { "secretId": secretResponse.secret.id }});
+                            this.updateNotificationService.publishUpdatedSecret(secretResponse.secret);
+                            this.snackBar.open("Secret saved", "Close", { duration: SAVE_MESSAGE_DURATION_MS });
+                        } else {
+                            this.errorMsg = "Unable to save secret. " + secretResponse?.errorMsg;
+                        }
+                    });
                 }
             });
+
+
         });
     }
 
@@ -235,7 +248,8 @@ export class SecretEditComponent {
 
             websitePasswordComponents: null,
             creditCardComponents: null,
-            textBlobComponents: null
+            textBlobComponents: null,
+            filesComponents: null
         };
 
         return this.typeEditComponentByTypeId[this.secretTypeId].appendSecretComponents(baseSecretInput);

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Apollo, QueryRef, gql } from "apollo-angular";
 import { DeleteSecretResponse, EMPTY_SECRET, Secret, SecretInput, SecretResponse, SecretsResponse, UnlockRequestInput } from "../model/secret";
 import { handleErrors } from "./client-util";
-import { Observable, from, map } from "rxjs";
+import { Observable, from, map, of } from "rxjs";
 
 const SECRET_ERROR_RESPONSE: SecretResponse = { success: false, secret: EMPTY_SECRET, errorMsg: "An error ocurred" };
 const SECRETS_ERROR_RESPONSE: SecretsResponse = { success: false, secrets: [], errorMsg: "An error ocurred" };
@@ -163,6 +163,39 @@ export class SecretClient {
         }
     }`;
 
+    private static readonly GET_SECRET_FILES_SECRET_DATA_QUERY: string = `
+    query getSecretFilesSecretData($id: String!) {
+        ownedSecret(id: $id) {
+            success
+            errorMsg
+            secret {
+                key {
+                    id
+                    name
+                    type {
+                        id
+                    }
+                    salt
+                }
+
+                filesComponents {
+                    files {
+                        fileId {
+                            id
+                            value
+                            encrypted
+                        }
+                        fileName {
+                            id
+                            value
+                            encrypted
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
     private static readonly SAVE_SECRET_MUTATION: string = `
     mutation saveSecret($secretInput: SecretInput!) {
         saveSecret(secretInput: $secretInput) {
@@ -300,6 +333,38 @@ export class SecretClient {
         }
     }`;
 
+    private static readonly UNLOCK_SECRET_FILES_SECRET_DATA_MUTATION: string = `
+        mutation unlockSecret($unlockRequest: UnlockRequest!) {
+        unlockSecret(unlockRequest: $unlockRequest) {
+            success
+            errorMsg
+            secret {
+                key {
+                    id
+                    name
+                    type {
+                        id
+                    }
+                }
+
+                filesComponents {
+                    files {
+                        fileId {
+                            id
+                            value
+                        }
+                        fileName {
+                            id
+                            value
+                            encrypted
+                            encryptionAlgorithm
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
     private static readonly DELETE_SECRET_MUTATION: string = `
     mutation deleteSecret($secretId: String!) {
         deleteSecret(secretId: $secretId) {
@@ -336,6 +401,10 @@ export class SecretClient {
         return this.getOwnedSecretData(id, SecretClient.GET_TEXT_BLOB_SECRET_DATA_QUERY, "getTextBlobSecretData");
     }
 
+    public getSecretFilesSecretData(id: string): Observable<SecretResponse> {
+        return this.getOwnedSecretData(id, SecretClient.GET_SECRET_FILES_SECRET_DATA_QUERY, "getSecretFilesSecretData");
+    }
+
     private getOwnedSecretData(id: string, gqlQuery: string, caller: string): Observable<SecretResponse> {
         const query: QueryRef<{ ownedSecret: SecretResponse }, { id: string }> = this.apollo.watchQuery({ 
             query: gql`${gqlQuery}`, 
@@ -369,6 +438,10 @@ export class SecretClient {
 
     public unlockTextBlobSecret(unlockRequest: UnlockRequestInput): Observable<SecretResponse> {
         return this.unlockSecret(unlockRequest, SecretClient.UNLOCK_TEXT_BLOB_SECRET_DATA_MUTATION, "unlockTextBlobSecret");
+    }
+
+    public unlockFilesSecret(unlockRequest: UnlockRequestInput): Observable<SecretResponse> {
+        return this.unlockSecret(unlockRequest, SecretClient.UNLOCK_SECRET_FILES_SECRET_DATA_MUTATION, "unlockFilesSecret");
     }
 
     private unlockSecret(unlockRequest: UnlockRequestInput, gqlQuery: string, caller: string): Observable<SecretResponse> {

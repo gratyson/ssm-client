@@ -2,13 +2,15 @@
 const SECRET_IMAGE_PATH_BY_TYPE: { [ k: string ]: string } = {
     "website_password": "assets/images/website.png",
     "credit_card": "assets/images/credit_card.png",
-    "text_blob": "assets/images/abc.png"
+    "text_blob": "assets/images/abc.png",
+    "files": "assets/images/docs.png"
 };
 
 export const environment = {
     GRAPHQL_ENPOINT_URL: "graphql",
 
     IMAGE_FILE_ENDPOINT_URL: "rest/image",
+    SECRET_FILE_ENDPOINT_URL: "rest/files",
 
     MOBILE_WIDTH_BREAK_PX: 500,
     TABLET_WIDTH_BREAK_PX: 1000,
@@ -27,4 +29,5 @@ export const environment = {
     DEFAULT_SECRET_IMAGE_PATH: "assets/images/lock.png",
     SECRET_IMAGE_PATH_BY_TYPE: SECRET_IMAGE_PATH_BY_TYPE,
 
+    MAX_SECRET_FILE_SIZE: 52428800 // 50MB
 }
