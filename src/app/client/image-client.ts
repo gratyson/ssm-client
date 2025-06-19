@@ -3,14 +3,12 @@ import { Injectable } from "@angular/core";
 import { Observable, catchError, of } from "rxjs";
 import { environment } from "../../environments/environment";
 import { SaveImageResult } from "../model/image";
-import { RestClientBase } from "./rest-client-base";
+import { handleError } from "./client-util";
 
 @Injectable({providedIn: "root"})
-export class ImageClient extends RestClientBase {
+export class ImageClient {
     
-    constructor(private httpClient: HttpClient) {
-        super("ImageClient");
-    }
+    constructor(private httpClient: HttpClient) { }
 
     public getImagePath(imageName: string): string {
         if (!imageName) {
@@ -33,14 +31,14 @@ export class ImageClient extends RestClientBase {
 
         const options = { headers: new HttpHeaders({ "Accept": "application/json" }) };
         return this.httpClient.put<SaveImageResult>(`${url}`, formData, options)
-            .pipe(catchError(this.handleError("saveImage", { success: false, errorMsg: "An error occurred on the server" })))
+            .pipe(catchError(handleError("saveImage", { success: false, errorMsg: "An error occurred on the server" })))
     }
 
     public deleteImage(imageName: string): Observable<SaveImageResult> {
         const url: string = environment.IMAGE_FILE_ENDPOINT_URL;
 
         const options = { headers: new HttpHeaders({ "Accept": "application/json" }), body: imageName };
-        return this.httpClient.delete<SaveImageResult>(`${url}`, options).pipe(catchError(this.handleError("deleteImage", { success: false, errorMsg: "An error occurred on the server" })));
+        return this.httpClient.delete<SaveImageResult>(`${url}`, options).pipe(catchError(handleError("deleteImage", { success: false, errorMsg: "An error occurred on the server" })));
     }
 
 

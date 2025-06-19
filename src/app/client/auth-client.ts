@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Apollo, QueryRef, gql } from "apollo-angular";
-import { Observable, from, map } from "rxjs";
-import { handleErrors } from "./client-util";
+import { Observable, catchError, from, map, retry } from "rxjs";
+import { handleErrors, handleGqlError } from "./client-util";
 import { AuthResponse, UserInput } from "../model/auth";
 import { ApolloQueryResult } from "@apollo/client";
 import { MutationResult } from "apollo-angular/types";
@@ -46,6 +46,7 @@ export class AuthClient {
         });
 
         return from(query.refetch())
+            .pipe(retry(1), catchError(handleGqlError("getLoggedInUsername", { loggedInUsername: "" })))    // initial call will fail and set XSRF cookie, subsequent calls should succeed
             .pipe(map(aqr => handleErrors(aqr, "getLoggedInUsername")))
             .pipe(map(aqr => aqr.data ? aqr.data.loggedInUsername : ""));
     }
